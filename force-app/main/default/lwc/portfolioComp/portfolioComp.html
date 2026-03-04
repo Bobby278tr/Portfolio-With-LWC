@@ -1,123 +1,309 @@
 <template>
-    <div class="background">
+<div class="background">
 
-        <!-- NAVBAR -->
-        <nav class="navbar">
-            <a href="#education">Education</a>
-            <a href="#experience">Experience</a>
-            <a href="#skills">Skills</a>
-            <a href="#projects">Projects</a>
-            <a href="#certifications">Certifications</a>
-            <a href="#contact">Contact</a>
-        </nav>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#experience">Experience</a>
+        <a href="#projects">Projects</a>
+        <a href="#education">Education</a>
+        <a href="#certifications">Certifications</a>
+        <a href="#contact">Contact</a>
+    </nav>
 
-        <!-- EDUCATION -->
-        <section id="education" class="section reveal">
-            <h1>Education</h1>
-            <template for:each={education.data} for:item="edu">
-                <div key={edu.Id} class="card">
-                    <h2>{edu.School_Name__c}</h2>
-                    <p>{edu.Start_Date__c} - {edu.End_Date__c}</p>
-                    <p>{edu.Description__c}</p>
+    <!-- ================= ABOUT ME ================= -->
+    <section id="about" class="section hero reveal">
+        <div class="hero-container">
+
+            <div class="hero-text">
+                <h1>Your Name</h1>
+                <p class="summary">
+                    Passionate Salesforce Developer building scalable
+                    LWC and Apex applications.
+                </p>
+
+                <div class="social-links">
+
+                    <a href="https://linkedin.com" target="_blank">
+                        <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png"
+                            class="social-icon"/>
+                        LinkedIn
+                    </a>
+
+                    <a href="https://github.com" target="_blank">
+                        <img src="https://cdn-icons-png.flaticon.com/512/733/733553.png"
+                            class="social-icon"/>
+                        GitHub
+                    </a>
+
+                    <a href="https://trailhead.salesforce.com" target="_blank">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Salesforce_logo.svg"
+                            class="social-icon"/>
+                        Trailhead
+                    </a>
+
+                    <a href="/resource/resume" target="_blank">
+                        📄 Resume
+                    </a>
+
+                </div>
+            </div>
+
+            <div class="hero-image">
+                <img src={aboutImage} class="profile-pic"/>
+            </div>
+
+        </div>
+    </section>
+    </section>
+
+    <div class="section-divider">
+        <svg viewBox="0 0 1440 200">
+            <path fill="url(#gradientWave1)" 
+                d="M0,160 C480,40 960,280 1440,120 L1440,0 L0,0 Z">
+            </path>
+            <defs>
+                <linearGradient id="gradientWave1" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#9d4edd"/>
+                    <stop offset="100%" stop-color="#0f3460"/>
+                </linearGradient>
+            </defs>
+        </svg>
+    </div>
+
+    <!-- ================= SKILLS ================= -->
+    <!-- <section id="skills" class="section reveal">
+        <h1>Skills</h1>
+
+        <div class="skills-container">
+            <template for:each={skills.data} for:item="skill">
+                <div key={skill.Id} class="skill-card">
+                    <img src={skill.Logo_URL__c}
+                         class="skill-logo"/>
+                    <span>{skill.Name}</span>
                 </div>
             </template>
-        </section>
+        </div>
+    </section> -->
 
-        <!-- EXPERIENCE TIMELINE -->
-        <section id="experience" class="section">
-            <h1>Experience</h1>
+    <section id="skills" class="section reveal">
+        <h1>Skills</h1>
 
-            <div class="timeline">
-                <template for:each={experienceData} for:item="exp">
-                    <div key={exp.Id} class={exp.timelineClass}>
-                        <div class="timeline-content reveal">
-                            <img src={exp.Logo_URL__c} class="logo"/>
-                            <h3>{exp.Organization_Name__c}</h3>
-                            <h4>{exp.Designation__c}</h4>
-                            <p>{exp.Start_Date__c} - {exp.End_Date__c}</p>
-                            <p>{exp.Description__c}</p>
-                        </div>
-                    </div>
-                </template>
-            </div>
-        </section>
-
-        <!-- SKILLS -->
-        <section id="skills" class="section reveal">
-            <h1>Skills</h1>
-            <div class="skills-container">
-                <template for:each={skills.data} for:item="skill">
-                    <div key={skill.Id} class="skill-block">
-                        {skill.Name}
-                    </div>
-                </template>
-            </div>
-        </section>
-
-        <!-- PROJECTS -->
-        <section id="projects" class="section reveal">
-            <h1>Projects</h1>
-            <div class="project-grid">
-                <template for:each={projects.data} for:item="proj">
-                    <div key={proj.Id}
-                         data-id={proj.Id}
-                         onclick={openModal}
-                         class="card project-card">
-                        <img src={proj.Image_URL__c}/>
-                        <h3>{proj.Name}</h3>
-                        <p>{proj.Short_Description__c}</p>
-                    </div>
-                </template>
-            </div>
-        </section>
-
-        <!-- PROJECT MODAL -->
-        <template if:true={selectedProject}>
-            <section class="modal">
-                <div class="modal-content">
-                    <h2>{selectedProject.Name}</h2>
-                    <img src={selectedProject.Image_URL__c}/>
-                    <p>{selectedProject.Full_Description__c}</p>
-                    <p><b>Skills:</b> {selectedProject.Skills__c}</p>
-                    <a href={selectedProject.Github_Link__c} target="_blank">View GitHub</a>
-                    <button onclick={closeModal}>Close</button>
+        <div class="skills-grid">
+            <template for:each={skills.data} for:item="skill">
+                <div key={skill.Id} class="skill-badge">
+                    <img src={skill.Logo_URL__c} class="skill-icon"/>
+                    <span>{skill.Name}</span>
                 </div>
-            </section>
-        </template>
+            </template>
+        </div>
+    </section>
+    <div class="section-divider">
+        <svg viewBox="0 0 1440 200">
+            <path fill="url(#gradientWave2)" 
+                d="M0,160 C480,40 960,280 1440,120 L1440,0 L0,0 Z">
+            </path>
+            <defs>
+                <linearGradient id="gradientWave2" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#9d4edd"/>
+                    <stop offset="100%" stop-color="#0f3460"/>
+                </linearGradient>
+            </defs>
+        </svg>
+    </div>
 
-        <!-- CERTIFICATIONS -->
-        <section id="certifications" class="section reveal">
-            <h1>Certifications</h1>
+    <!-- ================= EXPERIENCE TIMELINE ================= -->
+    <section id="experience" class="section">
+        <h1>Experience</h1>
+
+        <div class="timeline">
+            <template for:each={experienceData} for:item="exp">
+                <div key={exp.Id} class={exp.timelineClass}>
+                    <div class="timeline-content reveal exp-card">
+                        <!-- Date badge -->
+                        <div class="date-badge">{exp.Start_Date__c} - {exp.End_Date__c}</div>
+
+                        <!-- Logo / Image -->
+                        <img src={exp.Logo_URL__c} class="experience-logo" onerror={handleImageError}/>
+
+                        <h3>{exp.Organization_Name__c}</h3>
+                        <h4>{exp.Designation__c}</h4>
+                        <lightning-pill label={exp.Skill__c}></lightning-pill>
+                        <p>{exp.Description__c}</p>
+                        <img src={exp.Image_URL__c} class="exp-hover-image"/>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </section>
+
+    <div class="section-divider">
+        <svg viewBox="0 0 1440 200">
+            <path fill="url(#gradientWave3)" 
+                d="M0,160 C480,40 960,280 1440,120 L1440,0 L0,0 Z">
+            </path>
+            <defs>
+                <linearGradient id="gradientWave3" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#9d4edd"/>
+                    <stop offset="100%" stop-color="#0f3460"/>
+                </linearGradient>
+            </defs>
+        </svg>
+    </div>
+
+    <!-- ================= PROJECTS ================= -->
+    <section id="projects" class="section reveal">
+        <h1>Projects</h1>
+
+        <div class="vertical-cards">
+            <template for:each={projects.data} for:item="proj">
+                <div key={proj.Id} class="card project-card" data-id={proj.Id} onclick ={openModal}>
+                    <img src={proj.Image_URL__c}/>
+                    <h3>{proj.Name}</h3>
+                    <p>{proj.Short_Description__c}</p>
+                </div>
+            </template>
+        </div>
+    </section>
+
+    <div class="section-divider">
+        <svg viewBox="0 0 1440 200">
+            <path fill="url(#gradientWave4)" 
+                d="M0,160 C480,40 960,280 1440,120 L1440,0 L0,0 Z">
+            </path>
+            <defs>
+                <linearGradient id="gradientWave4" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#9d4edd"/>
+                    <stop offset="100%" stop-color="#0f3460"/>
+                </linearGradient>
+            </defs>
+        </svg>
+    </div>
+
+    <!-- PROJECT MODAL -->
+    <template if:true={selectedProject}>
+        <section class="modal">
+            <div class="modal-content">
+                <h2>{selectedProject.Name}</h2>
+                <img src={selectedProject.Image_URL__c}/>
+                <p>{selectedProject.Full_Description__c}</p>
+                <p><b>Skills:</b> {selectedProject.Skills__c}</p>
+                <a href={selectedProject.Github_Link__c} target="_blank">View GitHub</a>
+                <button onclick={closeModal}>Close</button>
+            </div>
+        </section>
+    </template>
+
+    <div class="section-divider">
+        <svg viewBox="0 0 1440 200">
+            <path fill="url(#gradientWave5)" 
+                d="M0,160 C480,40 960,280 1440,120 L1440,0 L0,0 Z">
+            </path>
+            <defs>
+                <linearGradient id="gradientWave5" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#9d4edd"/>
+                    <stop offset="100%" stop-color="#0f3460"/>
+                </linearGradient>
+            </defs>
+        </svg>
+    </div>
+
+    <!-- ================= EDUCATION TIMELINE ================= -->
+    <section id="education" class="section">
+        <h1>Education</h1>
+
+        <div class="timeline">
+            <template for:each={educationData} for:item="edu">
+                <div key={edu.Id} class={edu.timelineClass}>
+                    <div class="timeline-content reveal exp-card">
+                        <!-- Date badge -->
+                        <div class="date-badge">{edu.Start_Date__c} - {edu.End_Date__c}</div>
+
+                        <!-- Logo / Image -->
+                        <img src={edu.Logo_URL__c} class="experience-logo" onerror={handleImageError}/>
+
+                        <h3>{edu.School_Name__c}</h3>
+                        <p>{edu.Description__c}</p>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </section>
+
+    <div class="section-divider">
+        <svg viewBox="0 0 1440 200">
+            <path fill="url(#gradientWave6)" 
+                d="M0,160 C480,40 960,280 1440,120 L1440,0 L0,0 Z">
+            </path>
+            <defs>
+                <linearGradient id="gradientWave6" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#9d4edd"/>
+                    <stop offset="100%" stop-color="#0f3460"/>
+                </linearGradient>
+            </defs>
+        </svg>
+    </div>
+
+    <!-- ================= CERTIFICATIONS ================= -->
+    <section id="certifications" class="section reveal">
+        <h1>Certifications</h1>
+
+        <div class="vertical-cards">
             <template for:each={certifications.data} for:item="cert">
                 <div key={cert.Id} class="card">
                     <img src={cert.Image_URL__c}/>
                     <h3>{cert.Name}</h3>
-                    <p>Issued By: {cert.Issued_By__c}</p>
-                    <p if:true={cert.Credential_Id__c}>
-                        Credential ID: {cert.Credential_Id__c}
-                    </p>
-                    <a href={cert.Credential_Link__c} target="_blank">View Credential</a>
+                    <p>{cert.Issued_By__c}</p>
+                    <a href={cert.Credential_Link__c} target="_blank">
+                        View Credential
+                    </a>
                 </div>
             </template>
-        </section>
+        </div>
+    </section>
 
-        <!-- CONTACT -->
-        <section id="contact" class="section reveal">
-            <h1>Contact Me</h1>
-            <div class="card contact-form">
+    <div class="section-divider">
+        <svg viewBox="0 0 1440 200">
+            <path fill="url(#gradientWave7)" 
+                d="M0,160 C480,40 960,280 1440,120 L1440,0 L0,0 Z">
+            </path>
+            <defs>
+                <linearGradient id="gradientWave7" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#9d4edd"/>
+                    <stop offset="100%" stop-color="#0f3460"/>
+                </linearGradient>
+            </defs>
+        </svg>
+    </div>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section reveal contact-section">
+        <h1>Let’s Connect</h1>
+        <div class="contact-wrapper">
+
+            <div class="contact-left">
+                <h3>Have a project in mind?</h3>
+                <p>Let’s build something amazing together 🚀</p>
+            </div>
+
+            <div class="contact-form">
                 <lightning-input label="Your Email"
-                                 onchange={handleEmail}></lightning-input>
+                                onchange={handleEmail}></lightning-input>
 
                 <lightning-input label="Subject"
-                                 onchange={handleSubject}></lightning-input>
+                                onchange={handleSubject}></lightning-input>
 
                 <lightning-textarea label="Message"
                                     onchange={handleBody}></lightning-textarea>
 
-                <lightning-button label="Connect"
-                                  onclick={sendContact}></lightning-button>
+                <lightning-button label="Send Message"
+                                variant="brand"
+                                onclick={sendContact}></lightning-button>
             </div>
-        </section>
+
+        </div>
+    </section>
 
     </div>
 </template>

@@ -14,23 +14,35 @@ export default class Portfolio extends LightningElement {
     subject;
     body;
 
-    @wire(getEducation) education;
+    @track educationData = [];
     @track experienceData = [];
 
-    @wire(getExperience)
-    wiredExperience({ data, error }) {
+    @wire(getEducation)
+    wiredEducation({ data }) {
         if (data) {
-            this.experienceData = data.map((item, index) => {
-                return {
-                    ...item,
-                    timelineClass: index % 2 === 0
-                        ? 'timeline-item left'
-                        : 'timeline-item right'
-                };
-            });
-        } else if (error) {
-            console.error(error);
+            this.educationData = data.map((item, index) => ({
+                ...item,
+                timelineClass: index % 2 === 0
+                    ? 'timeline-item left'
+                    : 'timeline-item right'
+            }));
         }
+    }
+
+    @wire(getExperience)
+    wiredExperience({ data }) {
+        if (data) {
+            this.experienceData = data.map((item, index) => ({
+                ...item,
+                timelineClass: index % 2 === 0
+                    ? 'timeline-item left'
+                    : 'timeline-item right'
+            }));
+        }
+    }
+
+    handleImageError(event) {
+        event.target.style.display = 'none';
     }
     @wire(getSkills) skills;
     @wire(getProjects) projects;
@@ -56,7 +68,9 @@ export default class Portfolio extends LightningElement {
 
     openModal(event){
         const id = event.currentTarget.dataset.id;
-        this.selectedProject = this.projects.data.find(p => p.Id === id);
+        if(this.projects?.data){
+            this.selectedProject = this.projects.data.find(p => p.Id === id);
+        }
     }
 
     closeModal(){
