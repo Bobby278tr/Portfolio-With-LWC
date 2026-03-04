@@ -1,3 +1,123 @@
 <template>
-    
+    <div class="background">
+
+        <!-- NAVBAR -->
+        <nav class="navbar">
+            <a href="#education">Education</a>
+            <a href="#experience">Experience</a>
+            <a href="#skills">Skills</a>
+            <a href="#projects">Projects</a>
+            <a href="#certifications">Certifications</a>
+            <a href="#contact">Contact</a>
+        </nav>
+
+        <!-- EDUCATION -->
+        <section id="education" class="section reveal">
+            <h1>Education</h1>
+            <template for:each={education.data} for:item="edu">
+                <div key={edu.Id} class="card">
+                    <h2>{edu.School_Name__c}</h2>
+                    <p>{edu.Start_Date__c} - {edu.End_Date__c}</p>
+                    <p>{edu.Description__c}</p>
+                </div>
+            </template>
+        </section>
+
+        <!-- EXPERIENCE TIMELINE -->
+        <section id="experience" class="section">
+            <h1>Experience</h1>
+
+            <div class="timeline">
+                <template for:each={experienceData} for:item="exp">
+                    <div key={exp.Id} class={exp.timelineClass}>
+                        <div class="timeline-content reveal">
+                            <img src={exp.Logo_URL__c} class="logo"/>
+                            <h3>{exp.Organization_Name__c}</h3>
+                            <h4>{exp.Designation__c}</h4>
+                            <p>{exp.Start_Date__c} - {exp.End_Date__c}</p>
+                            <p>{exp.Description__c}</p>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </section>
+
+        <!-- SKILLS -->
+        <section id="skills" class="section reveal">
+            <h1>Skills</h1>
+            <div class="skills-container">
+                <template for:each={skills.data} for:item="skill">
+                    <div key={skill.Id} class="skill-block">
+                        {skill.Name}
+                    </div>
+                </template>
+            </div>
+        </section>
+
+        <!-- PROJECTS -->
+        <section id="projects" class="section reveal">
+            <h1>Projects</h1>
+            <div class="project-grid">
+                <template for:each={projects.data} for:item="proj">
+                    <div key={proj.Id}
+                         data-id={proj.Id}
+                         onclick={openModal}
+                         class="card project-card">
+                        <img src={proj.Image_URL__c}/>
+                        <h3>{proj.Name}</h3>
+                        <p>{proj.Short_Description__c}</p>
+                    </div>
+                </template>
+            </div>
+        </section>
+
+        <!-- PROJECT MODAL -->
+        <template if:true={selectedProject}>
+            <section class="modal">
+                <div class="modal-content">
+                    <h2>{selectedProject.Name}</h2>
+                    <img src={selectedProject.Image_URL__c}/>
+                    <p>{selectedProject.Full_Description__c}</p>
+                    <p><b>Skills:</b> {selectedProject.Skills__c}</p>
+                    <a href={selectedProject.Github_Link__c} target="_blank">View GitHub</a>
+                    <button onclick={closeModal}>Close</button>
+                </div>
+            </section>
+        </template>
+
+        <!-- CERTIFICATIONS -->
+        <section id="certifications" class="section reveal">
+            <h1>Certifications</h1>
+            <template for:each={certifications.data} for:item="cert">
+                <div key={cert.Id} class="card">
+                    <img src={cert.Image_URL__c}/>
+                    <h3>{cert.Name}</h3>
+                    <p>Issued By: {cert.Issued_By__c}</p>
+                    <p if:true={cert.Credential_Id__c}>
+                        Credential ID: {cert.Credential_Id__c}
+                    </p>
+                    <a href={cert.Credential_Link__c} target="_blank">View Credential</a>
+                </div>
+            </template>
+        </section>
+
+        <!-- CONTACT -->
+        <section id="contact" class="section reveal">
+            <h1>Contact Me</h1>
+            <div class="card contact-form">
+                <lightning-input label="Your Email"
+                                 onchange={handleEmail}></lightning-input>
+
+                <lightning-input label="Subject"
+                                 onchange={handleSubject}></lightning-input>
+
+                <lightning-textarea label="Message"
+                                    onchange={handleBody}></lightning-textarea>
+
+                <lightning-button label="Connect"
+                                  onclick={sendContact}></lightning-button>
+            </div>
+        </section>
+
+    </div>
 </template>
