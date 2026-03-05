@@ -48,6 +48,24 @@ export default class Portfolio extends LightningElement {
     @wire(getProjects) projects;
     @wire(getCertifications) certifications;
 
+    connectedCallback(){
+        window.addEventListener('scroll', this.updateScrollProgress.bind(this));
+    }
+
+    updateScrollProgress(){
+        const winScroll = window.scrollY;
+        const height =
+            document.documentElement.scrollHeight -
+            document.documentElement.clientHeight;
+
+        const scrolled = (winScroll / height) * 100;
+
+        const bar = this.template.querySelector('.scroll-progress');
+        if(bar){
+            bar.style.width = scrolled + '%';
+        }
+    }
+
     renderedCallback() {
         const reveals = this.template.querySelectorAll('.reveal');
         const observer = new IntersectionObserver(entries => {

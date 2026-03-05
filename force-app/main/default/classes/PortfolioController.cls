@@ -48,7 +48,7 @@ public with sharing class PortfolioController {
 
         // Send Email
         Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-        mail.setToAddresses(new String[] {'yourmail@gmail.com'});
+        mail.setToAddresses(new String[] {'bobbytripathi24@gmail.com'});
         mail.setSubject(subject);
         mail.setPlainTextBody('From: ' + email + '\n\n' + body);
         Messaging.sendEmail(new Messaging.SingleEmailMessage[] {mail});
