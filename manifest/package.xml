@@ -62,5 +62,10 @@
             <members>Access_for_Portfolio</members>
             <name>PermissionSet</name>
         </types>
+
+        <types>
+            <members>*</members>
+            <name>SharingRules</name>
+        </types>
     <version>65.0</version>
 </Package>
