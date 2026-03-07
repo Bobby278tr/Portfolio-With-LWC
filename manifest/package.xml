@@ -19,6 +19,7 @@
             <members>AccentureAward</members>
             <members>NokiaIntern</members>
             <members>Resource_for_Portfolio</members>
+            <members>GalgotiasUniversity</members>
             <name>StaticResource</name>
         </types>
 
@@ -26,6 +27,40 @@
             <members>PortFolio</members>
             <name>CustomApplication</name>
         </types>
-    
+
+        <types>
+            <members>portfolio</members>
+            <name>CspTrustedSite</name>
+        </types>
+
+        <types>
+            <members>Portfolio Profile</members>
+            <name>Profile</name>
+        </types>
+
+        <types>
+            <members>Portfolio</members>
+            <name>Network</name>
+        </types>
+
+        <types>
+            <members>Portfolio</members>
+            <name>ExperienceBundle</name>
+        </types>
+
+        <types>
+            <members>Portfolio</members>
+            <name>SiteDotCom</name>
+        </types>
+
+        <types>
+            <members>Portfolio</members>
+            <name>NavigationMenu</name>
+        </types>
+
+        <types>
+            <members>Access_for_Portfolio</members>
+            <name>PermissionSet</name>
+        </types>
     <version>65.0</version>
 </Package>

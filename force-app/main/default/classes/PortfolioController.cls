@@ -1,4 +1,4 @@
-public with sharing class PortfolioController {
+public class PortfolioController {
 
     @AuraEnabled(cacheable=true)
     public static List<Education__c> getEducation(){

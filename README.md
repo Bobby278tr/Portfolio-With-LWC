@@ -1,18 +1,308 @@
-# Salesforce DX Project: Next Steps
+# Salesforce Portfolio Website
 
-Now that you’ve created a Salesforce DX project, what’s next? Here are some documentation resources to get you started.
+A **personal portfolio website built on Salesforce Experience Cloud using Lightning Web Components (LWC)**.
 
-## How Do You Plan to Deploy Your Changes?
+This project demonstrates how Salesforce can be used not only for CRM but also for building **modern web applications with dynamic UI and backend integration**.
 
-Do you want to deploy a set of changes, or create a self-contained application? Choose a [development model](https://developer.salesforce.com/tools/vscode/en/user-guide/development-models).
+The portfolio showcases:
 
-## Configure Your Salesforce DX Project
+- Professional Experience
+- Projects
+- Education
+- Certifications
+- Technical Skills
+- Contact Form with Email Integration
 
-The `sfdx-project.json` file contains useful configuration information for your project. See [Salesforce DX Project Configuration](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_ws_config.htm) in the _Salesforce DX Developer Guide_ for details about this file.
+---
 
-## Read All About It
+# Live Demo
 
-- [Salesforce Extensions Documentation](https://developer.salesforce.com/tools/vscode/)
-- [Salesforce CLI Setup Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_intro.htm)
-- [Salesforce DX Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_intro.htm)
-- [Salesforce CLI Command Reference](https://developer.salesforce.com/docs/atlas.en-us.sfdx_cli_reference.meta/sfdx_cli_reference/cli_reference.htm)
+Example Portfolio URL:
+
+https://orgfarm-6d6390b11c-dev-ed.develop.my.site.com/portfolio/
+
+---
+
+# Features
+
+## Interactive UI
+- Animated experience timeline
+- Animated tech stack section
+- Project modal popups
+- Hover animations
+- Scroll reveal animations
+
+## Portfolio Sections
+
+- About / Hero Section
+- Skills
+- Experience Timeline
+- Projects Showcase
+- Education Timeline
+- Certifications
+- Contact Form
+
+## Salesforce Integration
+
+- Custom objects to store portfolio data
+- Apex controllers for retrieving data
+- Experience Cloud public website
+- Static resources for images and icons
+
+
+---
+
+# Architecture
+Experience Cloud Site
+│
+▼
+Lightning Web Component (Portfolio UI)
+│
+▼
+Apex Controllers
+│
+▼
+Salesforce Custom Objects
+
+
+---
+
+# Project Structure
+force-app
+└── main
+└── default
+├── lwc
+│ └── portfolio
+│ ├── portfolio.html
+│ ├── portfolio.js
+│ ├── portfolio.css
+│ └── portfolio.js-meta.xml
+│
+├── classes
+│ ├── PortfolioController.cls
+│ └── PortfolioController.cls-meta.xml
+│
+├── objects
+│ ├── Experience__c
+│ ├── Education__c
+│ ├── Project__c
+│ ├── Certification__c
+│ └── Skill__c
+│
+└── staticresources
+└── Resource_for_Portfolio
+
+
+---
+
+# Custom Objects
+
+## Experience Object
+
+Stores professional experience.
+
+Fields:
+
+- Organization_Name__c
+- Designation__c
+- Start_Date__c
+- End_Date__c
+- Description__c
+- Skill__c
+- Logo_URL__c
+- Image_URL__c
+
+---
+
+## Education Object
+
+Stores education details.
+
+Fields:
+
+- School_Name__c
+- Degree__c
+- Grade__c
+- Start_Date__c
+- End_Date__c
+- Description__c
+- Logo_URL__c
+
+---
+
+## Project Object
+
+Stores project information.
+
+Fields:
+
+- Title__c
+- Description__c
+- Image_URL__c
+- GitHub_URL__c
+- Tech_Stack__c
+
+---
+
+## Certification Object
+
+Stores certification details.
+
+Fields:
+
+- Certification_Name__c
+- Issuer__c
+- Date__c
+- Certificate_URL__c
+
+---
+
+## Skill Object
+
+Stores technology stack data.
+
+Fields:
+
+- Skill_Name__c
+- Image_URL__c
+
+---
+
+# Static Resources
+
+Images and icons used in the portfolio are stored in Salesforce Static Resources.
+
+Example structure:
+Resource_for_Portfolio
+├── portfolio.png
+├── salesforce.png
+├── apex.png
+├── lwc.png
+└── javascript.png
+
+
+Example usage:
+/resource/Resource_for_Portfolio/portfolio.png
+
+
+---
+
+# Experience Cloud Setup
+
+1. Enable Digital Experiences
+Setup → Digital Experiences → Settings
+
+
+2. Create a new site
+Setup → All Sites → New
+
+
+Choose template:
+Build Your Own (LWR)
+
+
+3. Open **Experience Builder**
+
+4. Add the **Portfolio LWC Component** to the homepage.
+
+5. Enable **Guest User Access**
+
+6. Publish the site.
+
+---
+
+# UI Components
+
+## Timeline UI
+
+Experience and Education sections use an animated timeline layout.
+
+Features:
+
+- Alternating timeline cards
+- Scroll reveal animations
+- Skill badges
+- Company logos
+
+---
+
+## Project Modal
+
+Clicking a project card opens a modal containing:
+
+- Project image
+- Detailed description
+- Technology stack
+- GitHub repository link
+
+---
+
+## Tech Stack Section
+
+Technologies are displayed as animated cards with hover effects.
+
+---
+
+## Scroll Animations
+
+Sections animate into view using **IntersectionObserver**.
+
+---
+
+# Technologies Used
+
+- Salesforce Experience Cloud
+- Lightning Web Components (LWC)
+- Apex
+- JavaScript
+- HTML
+- CSS
+
+---
+
+# Deployment
+
+Clone the repository.
+git clone https://github.com/Bobby278tr/Portfolio-With-LWC.git
+
+
+Authenticate Salesforce org.
+sfdx auth:web:login
+
+
+Deploy project.
+sfdx force:source:deploy -p force-app
+
+
+Publish the Experience Cloud site after deployment.
+
+---
+
+# Future Improvements
+
+Potential enhancements:
+
+- Dark mode toggle
+- GitHub activity section
+- Resume download button
+- Mobile navigation improvements
+- Project filtering
+- Analytics integration
+
+---
+
+# Author
+
+Portfolio created by:
+
+**Bobby Tripathi**  
+Salesforce Developer
+
+GitHub:
+
+https://github.com/Bobby278tr
+
+LinkedIn:
+
+https://www.linkedin.com/in/bobby-tripathi-b178361b5/
+
