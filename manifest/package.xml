@@ -13,6 +13,19 @@
             <members>Portfolio_Mail_Sent</members>
             <name>Flow</name>
         </types>
+
+        <types>
+            <members>HeroImage</members>
+            <members>AccentureAward</members>
+            <members>NokiaIntern</members>
+            <members>Resource_for_Portfolio</members>
+            <name>StaticResource</name>
+        </types>
+
+        <types>
+            <members>PortFolio</members>
+            <name>CustomApplication</name>
+        </types>
     
     <version>65.0</version>
 </Package>
