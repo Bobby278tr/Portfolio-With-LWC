@@ -7,9 +7,20 @@ import getCertifications from '@salesforce/apex/PortfolioController.getCertifica
 import handleContact from '@salesforce/apex/PortfolioController.handleContact';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
+import PORTFOLIO_RES from '@salesforce/resourceUrl/Resource_for_Portfolio';
+
+import HeroImage from '@salesforce/resourceUrl/HeroImage';
+
 export default class Portfolio extends LightningElement {
 
     @track selectedProject;
+    linkedinIcon = PORTFOLIO_RES + '/Images/logo-Linkedin.png';
+    gitHubIcon = PORTFOLIO_RES + '/Images/GitHub-logo.png';
+    trailHeadIcon = PORTFOLIO_RES + '/Images/trailhead-logo.png';
+    doubleStarRangerIcon = PORTFOLIO_RES + '/Images/double-star-ranger.png';
+    PDIcon = PORTFOLIO_RES + '/Images/PlatDevBadge.png';
+    AgentforceIcon = PORTFOLIO_RES + '/Images/badge-agentforce.jpg';
+    aboutImage = HeroImage;
 
     email = '';
     subject = '';

@@ -46,18 +46,17 @@
                     <div class="social-links">
 
                         <a href="https://www.linkedin.com/in/bobby-tripathi-b178361b5/" target="_blank">
-                            <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" class="social-icon" />
+                            <img src={linkedinIcon} class="social-icon" />
                             LinkedIn
                         </a>
 
                         <a href="https://github.com/Bobby278tr" target="_blank">
-                            <img src="https://cdn-icons-png.flaticon.com/512/733/733553.png" class="social-icon" />
+                            <img src={gitHubIcon} class="social-icon" />
                             GitHub
                         </a>
 
                         <a href="https://www.salesforce.com/trailblazer/uiyqxl7o4p1l74w2gg" target="_blank">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Salesforce_logo.svg"
-                                class="social-icon" />
+                            <img src={trailHeadIcon} class="social-icon" />
                             Trailhead
                         </a>
 
@@ -66,6 +65,13 @@
                             📄 Resume
                         </a>
 
+
+                    </div>
+                    <div class="badge-container">
+                        <img src={doubleStarRangerIcon} class="hero-badge"
+                            alt="Salesforce Double Star Ranger Certification" />
+                        <img src={PDIcon} class="hero-badge" alt="Salesforce Platform Developer Certification" />
+                        <img src={AgentforceIcon} class="hero-badge" alt="Salesforce Agentforce Certification" />
                     </div>
                 </div>
 
@@ -80,19 +86,6 @@
 
 
         <!-- SKILLS -->
-        <!-- <section id="skills" class="section reveal">
-            <h1>Skills</h1>
-            <div class="skills-wrapper">
-                <div class="skills-grid">
-                    <template for:each={skills.data} for:item="skill">
-                        <div key={skill.Id} class="skill-badge">
-                            <img src={skill.Logo_URL__c} class="skill-icon" />
-                            <span>{skill.Name}</span>
-                        </div>
-                    </template>
-                </div>
-            </div>
-        </section> -->
 
         <section id="tech" class="section">
 
@@ -243,7 +236,7 @@
 
                             <div class="exp-header">
 
-                                <img src={edu.Logo_URL__c} class="experience-logo" onerror={handleImageError} />
+                                <img src={edu.Logo__c} class="experience-logo" onerror={handleImageError} />
 
                                 <div class="exp-title">
 
@@ -324,7 +317,7 @@
 
                 <div class="contact-form">
 
-                    <input type="text" placeholder="Full Name" value ={name} onchange={handleName}>
+                    <input type="text" placeholder="Full Name" value={name} onchange={handleName}>
 
                     <input type="email" placeholder="Email Address" value={email} onchange={handleEmail}>
 

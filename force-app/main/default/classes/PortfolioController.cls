@@ -2,7 +2,7 @@ public with sharing class PortfolioController {
 
     @AuraEnabled(cacheable=true)
     public static List<Education__c> getEducation(){
-        return [SELECT Id, School_Name__c, Degree__c, Grade__c, Start_Date__c, End_Date__c, Description__c FROM Education__c ORDER BY Display_Order__c];
+        return [SELECT Id, School_Name__c, Degree__c, Grade__c, Start_Date__c, End_Date__c, Description__c, Logo__c FROM Education__c ORDER BY Display_Order__c];
     }
 
     @AuraEnabled(cacheable=true)
@@ -15,7 +15,7 @@ public with sharing class PortfolioController {
 
     @AuraEnabled(cacheable=true)
     public static List<Skill__c> getSkills(){
-        return [SELECT Id, Name FROM Skill__c ORDER BY Display_Order__c];
+        return [SELECT Id, Name,Logo_URL__c FROM Skill__c ORDER BY Display_Order__c];
     }
 
     @AuraEnabled(cacheable=true)
