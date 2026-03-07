@@ -5,6 +5,7 @@ import getSkills from '@salesforce/apex/PortfolioController.getSkills';
 import getProjects from '@salesforce/apex/PortfolioController.getProjects';
 import getCertifications from '@salesforce/apex/PortfolioController.getCertifications';
 import handleContact from '@salesforce/apex/PortfolioController.handleContact';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 export default class Portfolio extends LightningElement {
 
@@ -13,31 +14,49 @@ export default class Portfolio extends LightningElement {
     email;
     subject;
     body;
+    name;
 
     @track educationData = [];
     @track experienceData = [];
 
     @wire(getEducation)
     wiredEducation({ data }) {
+
         if (data) {
-            this.educationData = data.map((item, index) => ({
-                ...item,
-                timelineClass: index % 2 === 0
-                    ? 'timeline-item left'
-                    : 'timeline-item right'
-            }));
+
+            this.educationData = data.map((item, index) => {
+
+                return {
+                    ...item,
+                    timelineClass:
+                        index % 2 === 0
+                            ? 'timeline-item left'
+                            : 'timeline-item right'
+                };
+
+            });
+
         }
+
     }
 
     @wire(getExperience)
     wiredExperience({ data }) {
         if (data) {
-            this.experienceData = data.map((item, index) => ({
-                ...item,
-                timelineClass: index % 2 === 0
-                    ? 'timeline-item left'
-                    : 'timeline-item right'
-            }));
+            this.experienceData = data.map((item, index) => {
+                let skillsArray = [];
+                if (item.Skill__c) {
+                    skillsArray = item.Skill__c.split(',').map(skill => skill.trim());
+                }
+                return {
+                    ...item,
+                    skillsArray,
+                    timelineClass:
+                        index % 2 === 0
+                            ? 'timeline-item left'
+                            : 'timeline-item right'
+                };
+            });
         }
     }
 
@@ -48,11 +67,11 @@ export default class Portfolio extends LightningElement {
     @wire(getProjects) projects;
     @wire(getCertifications) certifications;
 
-    connectedCallback(){
+    connectedCallback() {
         window.addEventListener('scroll', this.updateScrollProgress.bind(this));
     }
 
-    updateScrollProgress(){
+    updateScrollProgress() {
         const winScroll = window.scrollY;
         const height =
             document.documentElement.scrollHeight -
@@ -61,54 +80,96 @@ export default class Portfolio extends LightningElement {
         const scrolled = (winScroll / height) * 100;
 
         const bar = this.template.querySelector('.scroll-progress');
-        if(bar){
+        if (bar) {
             bar.style.width = scrolled + '%';
         }
     }
 
     renderedCallback() {
-        const reveals = this.template.querySelectorAll('.reveal');
-        const observer = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if(entry.isIntersecting){
-                    entry.target.classList.add('active');
+        const elements = this.template.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+
+                });
+
+            },
+            {
+                threshold: 0.15
+            }
+        );
+        elements.forEach((el) => {
+            if (!el.classList.contains('observer-added')) {
+                observer.observe(el);
+                el.classList.add('observer-added');
+            }
+        });
+
+        if (!this.mouseListenerAdded) {
+            const spotlight = this.template.querySelector('.spotlight');
+            window.addEventListener('mousemove', (e) => {
+                if (spotlight) {
+                    spotlight.style.left = e.clientX + 'px';
+                    spotlight.style.top = e.clientY + 'px';
                 }
             });
-        });
-        reveals.forEach(el => observer.observe(el));
+            this.mouseListenerAdded = true;
+        }
     }
 
-    expClass(index){
+    expClass(index) {
         return index % 2 === 0
             ? 'timeline-item left'
             : 'timeline-item right';
     }
 
-    openModal(event){
+    openModal(event) {
         const id = event.currentTarget.dataset.id;
-        if(this.projects?.data){
+        if (this.projects?.data) {
             this.selectedProject = this.projects.data.find(p => p.Id === id);
         }
     }
 
-    closeModal(){
+    closeModal() {
         this.selectedProject = null;
     }
 
-    handleEmail(e){ this.email = e.target.value; }
-    handleSubject(e){ this.subject = e.target.value; }
-    handleBody(e){ this.body = e.target.value; }
+    stopPropagation(event) {
+        event.stopPropagation();
+    }
 
-    sendContact(){
+    handleEmail(e) { this.email = e.target.value; }
+    handleSubject(e) { this.subject = e.target.value; }
+    handleBody(e) { this.body = e.target.value; }
+    handleName(e) { this.name = e.target.value; }
+
+    sendContact() {
         handleContact({
+            name: this.name,
             email: this.email,
             subject: this.subject,
             body: this.body
-        }).then(()=>{
-            alert('Lead Created & Email Sent!');
+        }).then(() => {
+            // alert('Message Sent Successfully 🚀');
+            this.showToast('Success', 'Message Sent Successfully 🚀', 'success');
             this.email = '';
             this.subject = '';
             this.body = '';
+            this.name = '';
         });
+    }
+
+    showToast(title, message, variant) {
+        const evt = new ShowToastEvent({
+            title: 'Hi ' + this.name,
+            message: 'Message Sent Successfully 🚀',
+            mode: 'dismissable',
+            variant: 'success'
+        });
+        this.dispatchEvent(evt);
     }
 }

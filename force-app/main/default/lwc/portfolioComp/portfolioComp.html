@@ -1,318 +1,340 @@
 <template>
-<div class="background">
+    <div class="background">
+        <div class="spotlight"></div>
 
-    <!-- NAVBAR -->
-    <nav class="navbar">
-        <div class="scroll-progress"></div>
-        <a href="#about">About</a>
-        <a href="#skills">Skills</a>
-        <a href="#experience">Experience</a>
-        <a href="#projects">Projects</a>
-        <a href="#education">Education</a>
-        <a href="#certifications">Certifications</a>
-        <a href="#contact">Contact</a>
-    </nav>
-
-    <!-- ABOUT -->
-    <section id="about" class="section hero reveal">
-
-        <div class="hero-container">
-
-            <div class="hero-text">
-                <h1>Your Name</h1>
-
-                <p class="summary">
-                    Passionate Salesforce Developer building scalable
-                    LWC and Apex applications.
-                </p>
-
-                <div class="social-links">
-
-                    <a href="https://linkedin.com" target="_blank">
-                        <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" class="social-icon"/>
-                        LinkedIn
-                    </a>
-
-                    <a href="https://github.com" target="_blank">
-                        <img src="https://cdn-icons-png.flaticon.com/512/733/733553.png" class="social-icon"/>
-                        GitHub
-                    </a>
-
-                    <a href="https://trailhead.salesforce.com" target="_blank">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Salesforce_logo.svg" class="social-icon"/>
-                        Trailhead
-                    </a>
-
-                    <a href="/resource/resume" target="_blank">
-                        📄 Resume
-                    </a>
-
-                </div>
+        <!-- NAVBAR -->
+        <nav class="navbar">
+            <div class="logo">
+                B
             </div>
-
-            <div class="hero-image">
-                <img src={aboutImage} class="profile-pic"/>
+            <div class="nav-links">
+                <a href="#about">About</a>
+                <a href="#skills">Skills</a>
+                <a href="#experience">Experience</a>
+                <a href="#projects">Projects</a>
+                <a href="#education">Education</a>
+                <a href="#certifications">Certifications</a>
+                <a href="#contact">Contact</a>
             </div>
+            <div class="scroll-progress"></div>
+        </nav>
 
-        </div>
+        <!-- ABOUT -->
+        <section id="about" class="section hero reveal">
 
-    </section>
-    <div class="wave"></div>
+            <div class="hero-container">
 
+                <div class="hero-text">
+                    <h1>Hi, I am Bobby Tripathi</h1>
 
-    <!-- SKILLS -->
-    <section id="skills" class="section reveal">
+                    <p class="summary">
+                        Salesforce Developer with 1.3+ years of enterprise experience on the Salesforce Platform,
+                        specializing in Apex, Lightning Web Components (LWC), and Flow-first automation within Financial
+                        Services Cloud. Proven ability to deliver bulkified, metadata-driven solutions, improve data
+                        quality, and reduce defects across development and testing cycles. Recognized for ownership,
+                        code quality, and delivery impact.
+                    </p>
 
-        <h1>Skills</h1>
+                    <div class="social-links">
 
-        <div class="skills-grid">
+                        <a href="https://www.linkedin.com/in/bobby-tripathi-b178361b5/" target="_blank">
+                            <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" class="social-icon" />
+                            LinkedIn
+                        </a>
 
-            <template for:each={skills.data} for:item="skill">
+                        <a href="https://github.com/Bobby278tr" target="_blank">
+                            <img src="https://cdn-icons-png.flaticon.com/512/733/733553.png" class="social-icon" />
+                            GitHub
+                        </a>
 
-                <div key={skill.Id} class="skill-badge">
+                        <a href="https://www.salesforce.com/trailblazer/uiyqxl7o4p1l74w2gg" target="_blank">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Salesforce_logo.svg"
+                                class="social-icon" />
+                            Trailhead
+                        </a>
 
-                    <img src={skill.Logo_URL__c} class="skill-icon"/>
-
-                    <span>{skill.Name}</span>
-
-                </div>
-
-            </template>
-
-        </div>
-
-    </section>
-    <div class="wave"></div>
-
-
-    <!-- EXPERIENCE -->
-    <section id="experience" class="section">
-
-        <h1>Experience</h1>
-
-        <div class="timeline">
-
-            <template for:each={experienceData} for:item="exp">
-
-                <div key={exp.Id} class={exp.timelineClass}>
-
-                    <div class="timeline-content reveal exp-card">
-
-                        <div class="date-badge">
-                            {exp.Start_Date__c} - {exp.End_Date__c}
-                        </div>
-
-                        <img src={exp.Logo_URL__c}
-                             class="experience-logo"
-                             onerror={handleImageError}/>
-
-                        <h3>{exp.Organization_Name__c}</h3>
-
-                        <h4>{exp.Designation__c}</h4>
-
-                        <lightning-pill label={exp.Skill__c}></lightning-pill>
-
-                        <p>{exp.Description__c}</p>
-
-                        <img src={exp.Image_URL__c} class="exp-hover-image"/>
+                        <a href="https://docs.google.com/document/d/12L9Uj8rNYJDaQmQXQ756Aq5njzn5hmWf/edit"
+                            target="_blank">
+                            📄 Resume
+                        </a>
 
                     </div>
-
                 </div>
 
-            </template>
-
-        </div>
-
-    </section>
-    <div class="wave"></div>
-
-
-    <!-- PROJECTS -->
-    <section id="projects" class="section reveal">
-
-        <h1>Projects</h1>
-
-        <div class="vertical-cards">
-
-            <template for:each={projects.data} for:item="proj">
-
-                <div key={proj.Id}
-                     class="card project-card"
-                     data-id={proj.Id}
-                     onclick={openModal}>
-
-                    <img src={proj.Image_URL__c}/>
-
-                    <h3>{proj.Name}</h3>
-
-                    <p>{proj.Short_Description__c}</p>
-
+                <div class="hero-image">
+                    <img src={aboutImage} class="profile-pic" />
                 </div>
-
-            </template>
-
-        </div>
-
-    </section>
-    <div class="wave"></div>
-
-
-    <!-- PROJECT MODAL -->
-    <template if:true={selectedProject}>
-
-        <section class="modal">
-
-            <div class="modal-content">
-
-                <h2>{selectedProject.Name}</h2>
-
-                <img src={selectedProject.Image_URL__c}/>
-
-                <p>{selectedProject.Full_Description__c}</p>
-
-                <p><b>Skills:</b> {selectedProject.Skills__c}</p>
-
-                <a href={selectedProject.Github_Link__c} target="_blank">
-                    View GitHub
-                </a>
-
-                <br/><br/>
-
-                <lightning-button
-                    label="Close"
-                    onclick={closeModal}>
-                </lightning-button>
 
             </div>
 
         </section>
-
-    </template>
-    
+        <div class="wave"></div>
 
 
-    <!-- EDUCATION -->
-    <section id="education" class="section">
-
-        <h1>Education</h1>
-
-        <div class="timeline">
-
-            <template for:each={educationData} for:item="edu">
-
-                <div key={edu.Id} class={edu.timelineClass}>
-
-                    <div class="timeline-content reveal">
-
-                        <div class="date-badge">
-                            {edu.Start_Date__c} - {edu.End_Date__c}
+        <!-- SKILLS -->
+        <section id="skills" class="section reveal">
+            <h1>Skills</h1>
+            <div class="skills-wrapper">
+                <div class="skills-grid">
+                    <template for:each={skills.data} for:item="skill">
+                        <div key={skill.Id} class="skill-badge">
+                            <img src={skill.Logo_URL__c} class="skill-icon" />
+                            <span>{skill.Name}</span>
                         </div>
+                    </template>
+                </div>
+            </div>
+        </section>
 
-                        <img src={edu.Logo_URL__c}
-                             class="experience-logo"
-                             onerror={handleImageError}/>
+        <div class="wave"></div>
 
-                        <h3>{edu.School_Name__c}</h3>
 
-                        <p>{edu.Description__c}</p>
+        <!-- EXPERIENCE -->
+        <section id="experience" class="section">
+
+            <h1>Experience</h1>
+
+            <div class="timeline">
+
+                <template for:each={experienceData} for:item="exp">
+
+                    <div key={exp.Id} class={exp.timelineClass}>
+
+                        <div class="timeline-content reveal exp-card">
+
+                            <div class="exp-header">
+
+                                <img src={exp.Logo_URL__c} class="experience-logo" onerror={handleImageError} />
+
+                                <div class="exp-title">
+
+                                    <h3>{exp.Organization_Name__c}</h3>
+
+                                    <h4>{exp.Designation__c}</h4>
+
+                                    <div class="date-text">
+                                        {exp.Start_Date__c} - {exp.End_Date__c}
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="pill-container">
+
+                                <template for:each={exp.skillsArray} for:item="skill">
+
+                                    <span key={skill} class="skill-tag">
+                                        {skill}
+                                    </span>
+
+                                </template>
+
+                            </div>
+
+                            <p class="exp-desc">
+                                {exp.Description__c}
+                            </p>
+
+                            <img src={exp.Image_URL__c} class="exp-hover-image" />
+
+                        </div>
 
                     </div>
 
-                </div>
+                </template>
 
-            </template>
+            </div>
 
-        </div>
-
-    </section>
-    <div class="wave"></div>
+        </section>
+        <div class="wave"></div>
 
 
-    <!-- CERTIFICATIONS -->
-    <section id="certifications" class="section reveal">
+        <!-- PROJECTS -->
+        <section id="projects" class="section reveal">
 
-        <h1>Certifications</h1>
+            <h1>Projects</h1>
 
-        <div class="vertical-cards">
+            <div class="vertical-cards">
 
-            <template for:each={certifications.data} for:item="cert">
+                <template for:each={projects.data} for:item="proj">
 
-                <div key={cert.Id} class="card">
+                    <div key={proj.Id} class="card project-card" data-id={proj.Id} onclick={openModal}>
 
-                    <img src={cert.Image_URL__c}/>
+                        <img src={proj.Image_URL__c} />
 
-                    <h3>{cert.Name}</h3>
+                        <h3>{proj.Name}</h3>
 
-                    <p>{cert.Issued_By__c}</p>
+                        <p>{proj.Short_Description__c}</p>
 
-                    <a href={cert.Credential_Link__c} target="_blank">
-                        View Credential
+                    </div>
+
+                </template>
+
+            </div>
+
+        </section>
+        <div class="wave"></div>
+
+
+        <!-- PROJECT MODAL -->
+
+        <template if:true={selectedProject}>
+
+            <div class="modal" onclick={closeModal}>
+
+                <div class="modal-content" onclick={stopPropagation}>
+
+                    <span class="modal-close" onclick={closeModal}>✕</span>
+
+                    <h2>{selectedProject.Title__c}</h2>
+
+                    <img src={selectedProject.Image_URL__c} class="modal-project-image" />
+
+                    <p>{selectedProject.Full_Description__c}</p>
+                    <p><b>Skills:</b> {selectedProject.Skills__c}</p>
+                    <a href={selectedProject.Github_Link__c} target="_blank">
+                        View GitHub
                     </a>
 
                 </div>
 
-            </template>
+            </div>
 
-        </div>
-
-    </section>
-    <div class="wave"></div>
+        </template>
 
 
-    <!-- CONTACT -->
-    <section id="contact" class="section reveal">
+        <!-- EDUCATION -->
+        <!-- <section id="education" class="section">
+            <h1>Education</h1>
+            <div class="timeline">
+                <template for:each={educationData} for:item="edu">
+                    <div key={edu.Id} class={edu.timelineClass}>
+                        <div class="timeline-content reveal">
+                            <div class="date-badge">
+                                {edu.Start_Date__c} - {edu.End_Date__c}
+                            </div>
+                            <img src={edu.Logo_URL__c} class="experience-logo" onerror={handleImageError} />
+                            <h3>{edu.School_Name__c}</h3>
+                            <h4>{edu.Degree__c}</h4>
+                            <p>Grade: {edu.Grade__c}</p>
+                            <p>{edu.Description__c}</p>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </section> -->
 
-        <h1>Let’s Connect</h1>
 
-        <div class="contact-wrapper">
+        <section id="education" class="section">
 
-            <div class="contact-left">
+            <h1>Education</h1>
 
-                <h3>Have a project in mind?</h3>
+            <div class="timeline">
 
-                <p>Let’s build something amazing together 🚀</p>
+                <template for:each={educationData} for:item="edu">
+
+                    <div key={edu.Id} class={edu.timelineClass}>
+
+                        <div class="timeline-content reveal exp-card">
+
+                            <div class="exp-header">
+
+                                <img src={edu.Logo_URL__c} class="experience-logo" onerror={handleImageError} />
+
+                                <div class="exp-title">
+
+                                    <h3>{edu.School_Name__c}</h3>
+                                    <h4>{edu.Degree__c}</h4>
+
+                                    <div class="date-text">
+                                        {edu.Start_Date__c} - {edu.End_Date__c}
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <p><b>Grade:</b> {edu.Grade__c}</p>
+
+                            <p class="exp-desc">
+                                {edu.Description__c}
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </template>
 
             </div>
 
-            <div class="contact-form slds-card slds-p-around_large">
+        </section>
+        <div class="wave"></div>
 
-                <lightning-input
-                    type="email"
-                    label="Email Address"
-                    variant="label-stacked"
-                    onchange={handleEmail}>
-                </lightning-input>
 
-                <lightning-input
-                    label="Subject"
-                    variant="label-stacked"
-                    class="slds-m-top_medium"
-                    onchange={handleSubject}>
-                </lightning-input>
+        <!-- CERTIFICATIONS -->
+        <section id="certifications" class="section reveal">
 
-                <lightning-textarea
-                    label="Message"
-                    variant="label-stacked"
-                    class="slds-m-top_medium"
-                    onchange={handleBody}>
-                </lightning-textarea>
+            <h1>Certifications</h1>
 
-                <div class="slds-m-top_large">
+            <div class="vertical-cards">
 
-                    <lightning-button
-                        label="Send Message"
-                        variant="brand"
-                        onclick={sendContact}>
-                    </lightning-button>
+                <template for:each={certifications.data} for:item="cert">
+
+                    <div key={cert.Id} class="card">
+
+                        <img src={cert.Image_URL__c} />
+
+                        <h3>{cert.Name}</h3>
+
+                        <p>{cert.Issued_By__c}</p>
+
+                        <a href={cert.Credential_Link__c} target="_blank">
+                            View Credential
+                        </a>
+
+                    </div>
+
+                </template>
+
+            </div>
+
+        </section>
+        <div class="wave"></div>
+
+
+        <!-- CONTACT -->
+        <section id="contact" class="section">
+
+            <h1>Let's Connect</h1>
+
+            <div class="contact-container">
+
+                <div class="contact-text">
+
+                    <h2>Have a project in mind?</h2>
+
+                    <p>Let's build something amazing together 🚀</p>
+
+                </div>
+
+                <div class="contact-form">
+
+                    <input type="text" placeholder="Full Name" onchange={handleName}>
+
+                    <input type="email" placeholder="Email Address" onchange={handleEmail}>
+
+                    <input type="text" placeholder="Subject" onchange={handleSubject}>
+
+                    <textarea placeholder="Message" onchange={handleBody}></textarea>
+
+                    <button onclick={sendContact}>Send Message</button>
 
                 </div>
 
             </div>
 
-        </div>
-
-    </section>
-
-</div>
+        </section>
+    </div>
 </template>

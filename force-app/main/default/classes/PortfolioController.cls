@@ -2,8 +2,7 @@ public with sharing class PortfolioController {
 
     @AuraEnabled(cacheable=true)
     public static List<Education__c> getEducation(){
-        return [SELECT Id, School_Name__c, Start_Date__c, End_Date__c, Description__c
-                FROM Education__c ORDER BY Display_Order__c];
+        return [SELECT Id, School_Name__c, Degree__c, Grade__c, Start_Date__c, End_Date__c, Description__c FROM Education__c ORDER BY Display_Order__c];
     }
 
     @AuraEnabled(cacheable=true)
@@ -36,21 +35,25 @@ public with sharing class PortfolioController {
     }
 
     @AuraEnabled
-    public static void handleContact(String email, String subject, String body){
+    public static void handleContact(String name, String email, String subject, String body){
 
-        // Create Lead
         Lead ld = new Lead();
-        ld.LastName = 'Portfolio Contact';
-        ld.Company = 'Website';
+        ld.LastName = name;
+        ld.Company = 'Portfolio Website';
         ld.Email = email;
         ld.Description = body;
         insert ld;
 
-        // Send Email
         Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
         mail.setToAddresses(new String[] {'bobbytripathi24@gmail.com'});
+        mail.setReplyTo(email);
         mail.setSubject(subject);
-        mail.setPlainTextBody('From: ' + email + '\n\n' + body);
-        Messaging.sendEmail(new Messaging.SingleEmailMessage[] {mail});
+        mail.setPlainTextBody(
+            'Name: ' + name + '\n' +
+            'Email: ' + email + '\n\n' +
+            body
+        );
+
+        Messaging.sendEmail(new Messaging.SingleEmailMessage[]{mail});
     }
 }
