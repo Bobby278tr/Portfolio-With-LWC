@@ -11,10 +11,20 @@ export default class Portfolio extends LightningElement {
 
     @track selectedProject;
 
-    email;
-    subject;
-    body;
-    name;
+    email = '';
+    subject = '';
+    body = '';
+    name = '';
+
+    menuOpen = false;
+
+    get navClass(){
+        return this.menuOpen ? 'nav-links active' : 'nav-links';
+    }
+
+    toggleMenu(){
+        this.menuOpen = !this.menuOpen;
+    }
 
     @track educationData = [];
     @track experienceData = [];

@@ -9,7 +9,7 @@ public with sharing class PortfolioController {
     public static List<Experience__c> getExperience(){
         return [SELECT Id, Organization_Name__c, Designation__c,
                 Start_Date__c, End_Date__c, Description__c,
-                Logo_URL__c, Image_URL__c
+                Logo_URL__c, Image_URL__c, Skill__c
                 FROM Experience__c ORDER BY Start_Date__c DESC];
     }
 
@@ -42,18 +42,7 @@ public with sharing class PortfolioController {
         ld.Company = 'Portfolio Website';
         ld.Email = email;
         ld.Description = body;
+        ld.Street = subject;
         insert ld;
-
-        Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-        mail.setToAddresses(new String[] {'bobbytripathi24@gmail.com'});
-        mail.setReplyTo(email);
-        mail.setSubject(subject);
-        mail.setPlainTextBody(
-            'Name: ' + name + '\n' +
-            'Email: ' + email + '\n\n' +
-            body
-        );
-
-        Messaging.sendEmail(new Messaging.SingleEmailMessage[]{mail});
     }
 }

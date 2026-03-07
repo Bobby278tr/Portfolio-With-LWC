@@ -4,19 +4,27 @@
 
         <!-- NAVBAR -->
         <nav class="navbar">
-            <div class="logo">
-                B
+
+            <div class="logo">B</div>
+
+            <div class="menu-icon" onclick={toggleMenu}>
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
-            <div class="nav-links">
-                <a href="#about">About</a>
-                <a href="#skills">Skills</a>
-                <a href="#experience">Experience</a>
-                <a href="#projects">Projects</a>
-                <a href="#education">Education</a>
-                <a href="#certifications">Certifications</a>
-                <a href="#contact">Contact</a>
-            </div>
-            <div class="scroll-progress"></div>
+
+            <ul class={navClass}>
+
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#education">Education</a></li>
+                <li><a href="#certifications">Certifications</a></li>
+                <li><a href="#contact">Contact</a></li>
+
+            </ul>
+
         </nav>
 
         <!-- ABOUT -->
@@ -72,7 +80,7 @@
 
 
         <!-- SKILLS -->
-        <section id="skills" class="section reveal">
+        <!-- <section id="skills" class="section reveal">
             <h1>Skills</h1>
             <div class="skills-wrapper">
                 <div class="skills-grid">
@@ -84,8 +92,24 @@
                     </template>
                 </div>
             </div>
-        </section>
+        </section> -->
 
+        <section id="tech" class="section">
+
+            <h1>Tech Stack</h1>
+
+            <div class="tech-container">
+
+                <template for:each={skills.data} for:item="skill">
+                    <div key={skill.Id} class="tech-card">
+                        <img src={skill.Logo_URL__c} class="skill-icon" />
+                        <h2>{skill.Name}</h2>
+                    </div>
+                </template>
+
+            </div>
+
+        </section>
         <div class="wave"></div>
 
 
@@ -163,7 +187,7 @@
 
                         <img src={proj.Image_URL__c} />
 
-                        <h3>{proj.Name}</h3>
+                        <h2>{proj.Name}</h2>
 
                         <p>{proj.Short_Description__c}</p>
 
@@ -205,27 +229,6 @@
 
 
         <!-- EDUCATION -->
-        <!-- <section id="education" class="section">
-            <h1>Education</h1>
-            <div class="timeline">
-                <template for:each={educationData} for:item="edu">
-                    <div key={edu.Id} class={edu.timelineClass}>
-                        <div class="timeline-content reveal">
-                            <div class="date-badge">
-                                {edu.Start_Date__c} - {edu.End_Date__c}
-                            </div>
-                            <img src={edu.Logo_URL__c} class="experience-logo" onerror={handleImageError} />
-                            <h3>{edu.School_Name__c}</h3>
-                            <h4>{edu.Degree__c}</h4>
-                            <p>Grade: {edu.Grade__c}</p>
-                            <p>{edu.Description__c}</p>
-                        </div>
-                    </div>
-                </template>
-            </div>
-        </section> -->
-
-
         <section id="education" class="section">
 
             <h1>Education</h1>
@@ -286,7 +289,7 @@
 
                         <img src={cert.Image_URL__c} />
 
-                        <h3>{cert.Name}</h3>
+                        <h2>{cert.Name}</h2>
 
                         <p>{cert.Issued_By__c}</p>
 
@@ -313,21 +316,21 @@
 
                 <div class="contact-text">
 
-                    <h2>Have a project in mind?</h2>
+                    <h1>Have a project in mind?</h1>
 
-                    <p>Let's build something amazing together 🚀</p>
+                    <h2>Let's build something amazing together 🚀</h2>
 
                 </div>
 
                 <div class="contact-form">
 
-                    <input type="text" placeholder="Full Name" onchange={handleName}>
+                    <input type="text" placeholder="Full Name" value ={name} onchange={handleName}>
 
-                    <input type="email" placeholder="Email Address" onchange={handleEmail}>
+                    <input type="email" placeholder="Email Address" value={email} onchange={handleEmail}>
 
-                    <input type="text" placeholder="Subject" onchange={handleSubject}>
+                    <input type="text" placeholder="Subject" value={subject} onchange={handleSubject}>
 
-                    <textarea placeholder="Message" onchange={handleBody}></textarea>
+                    <textarea placeholder="Message" value={body} onchange={handleBody}></textarea>
 
                     <button onclick={sendContact}>Send Message</button>
 

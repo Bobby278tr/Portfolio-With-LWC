@@ -8,6 +8,11 @@
         <members>Project__c</members>
         <name>CustomObject</name>
     </types>
+
+        <types>
+            <members>Portfolio_Mail_Sent</members>
+            <name>Flow</name>
+        </types>
     
     <version>65.0</version>
 </Package>
