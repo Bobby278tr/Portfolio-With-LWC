@@ -147,68 +147,6 @@ export default class Portfolio extends LightningElement {
         this.dispatchEvent(new ShowToastEvent({ title, message, variant, mode: 'dismissable' }));
     }
 
-    /* ── mascot ──────────────────────────────────────────────────── */
-    @track mascotVisible  = false;
-    @track mascotNodeId   = 'root';
-    @track mascotText     = '';
-    @track mascotOptions  = [];
-    @track mascotTyping   = false;
-    _funFactIndex         = 0;
-    _mascotTypeTimer      = null;
-
-    _loadNode(nodeId) {
-        const node = { ...MASCOT_TREE[nodeId] };
-        if (nodeId === 'fun') {
-            node.text = FUN_FACTS[this._funFactIndex % FUN_FACTS.length];
-            this._funFactIndex++;
-        }
-        this.mascotTyping  = true;
-        this.mascotText    = '…';
-        this.mascotOptions = [];
-        clearTimeout(this._mascotTypeTimer);
-        this._mascotTypeTimer = setTimeout(() => {
-            this.mascotTyping  = false;
-            this.mascotText    = node.text;
-            this.mascotOptions = node.options || [];
-            this.mascotNodeId  = nodeId;
-        }, 650);
-    }
-
-    get mascotBubbleClass() {
-        return this.mascotVisible ? 'mascot-bubble mascot-bubble--visible' : 'mascot-bubble';
-    }
-
-    get mascotFigureClass() {
-        return this.mascotTyping ? 'mascot-figure mascot-figure--talking' : 'mascot-figure';
-    }
-
-    handleMascotClick() {
-        if (!this.mascotVisible) {
-            this.mascotVisible = true;
-            this._loadNode('root');
-        } else if (this.mascotNodeId === 'bye' || !this.mascotOptions.length) {
-            this.mascotVisible = false;
-        }
-    }
-
-    handleMascotOption(event) {
-        event.stopPropagation();
-        const next = event.currentTarget.dataset.next;
-        if (!next || next === 'bye') {
-            this._loadNode('bye');
-            setTimeout(() => { this.mascotVisible = false; }, 2200);
-            return;
-        }
-        if (next.startsWith('nav:')) {
-            const id = next.split(':')[1];
-            const el = this.template.querySelector('#' + id) || document.getElementById(id);
-            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            this.mascotVisible = false;
-            return;
-        }
-        this._loadNode(next);
-    }
-
     /* ── wired data ──────────────────────────────────────────────── */
     @track educationData   = [];
     @track experienceData  = [];
@@ -250,12 +188,6 @@ export default class Portfolio extends LightningElement {
         };
         window.addEventListener('mousemove', this._mouseMoveHandler, { passive: true });
 
-        // Auto-greet with mascot after 3.5s
-        this._mascotTimer = setTimeout(() => {
-            this.mascotVisible = true;
-            this._loadNode('root');
-        }, 3500);
-
         // Start typewriter
         setTimeout(() => this._typeStep(), 500);
     }
@@ -263,8 +195,6 @@ export default class Portfolio extends LightningElement {
     disconnectedCallback() {
         window.removeEventListener('scroll', this._scrollHandler);
         window.removeEventListener('mousemove', this._mouseMoveHandler);
-        clearTimeout(this._mascotTimer);
-        clearTimeout(this._mascotTypeTimer);
         clearTimeout(this._typeTimer);
         if (this._revealObserver) this._revealObserver.disconnect();
         if (this._navObserver)    this._navObserver.disconnect();
