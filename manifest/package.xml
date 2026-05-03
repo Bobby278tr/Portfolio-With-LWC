@@ -43,6 +43,7 @@
             <name>Network</name>
         </types>
 
+        <!--
         <types>
             <members>Portfolio</members>
             <name>ExperienceBundle</name>
@@ -57,6 +58,7 @@
             <members>Portfolio</members>
             <name>NavigationMenu</name>
         </types>
+        -->
 
         <types>
             <members>Access_for_Portfolio</members>

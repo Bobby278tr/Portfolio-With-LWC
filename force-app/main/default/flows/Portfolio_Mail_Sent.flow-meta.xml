@@ -25,7 +25,7 @@
         <inputParameters>
             <name>emailSubject</name>
             <value>
-                <elementReference>$Record.Street</elementReference>
+                <elementReference>emailSubject</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -33,12 +33,6 @@
             <value>
                 <inputConfiguratorMode>Custom</inputConfiguratorMode>
                 <stringValue>{!emailBody}</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>recipientId</name>
-            <value>
-                <stringValue>bobbytripathi24@gmail.com</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -90,11 +84,24 @@
         <name>emailBody</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
         <text>Hi Bobby,
-You got an email from the following:
-Name: {!$Record.LastName}
-Subject: {!$Record.Street}
-Message: {!$Record.Description}
-Please reach out to them.
-Thank you!!</text>
+
+        You have received a new message from a portfolio visitor.
+
+        Name: {!$Record.FirstName} {!$Record.LastName}
+        Email: {!$Record.Email}
+        Subject: {!$Record.Street}
+
+        Message:
+        {!$Record.Description}
+
+        Please review and follow up as needed.
+
+        Regards,
+        Portfolio Contact Flow</text>
+    </textTemplates>
+    <textTemplates>
+        <name>emailSubject</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>New portfolio inquiry from {!$Record.FirstName} {!$Record.LastName}</text>
     </textTemplates>
 </Flow>
