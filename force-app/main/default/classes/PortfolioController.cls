@@ -36,30 +36,17 @@ public class PortfolioController {
                 FROM Certification__c ORDER BY Display_Order__c];
     }
 
+    /* ── FUTURE PLANS ──────────────────────────────────────────── */
+
+    @AuraEnabled(cacheable=true)
+    public static List<Future_Plans__c> getFuturePlans(){
+        return [SELECT Id, Name, Level__c, Description__c
+                FROM Future_Plans__c
+                ORDER BY CreatedDate DESC];
+    }
+
     /* ── CONTACT / EMAIL ───────────────────────────────────────── */
 
-    /*
-     * HOW EMAIL DELIVERY WORKS — read this if mail is not arriving
-     * ─────────────────────────────────────────────────────────────
-     * Salesforce blocks outbound email to external addresses unless:
-     *
-     *  1. Setup → Email → Deliverability → "Access Level" = "All Email"
-     *     (default on new orgs is "System Only" which blocks user mail)
-     *
-     *  2. For Experience Cloud / Guest-user contexts you ALSO need an
-     *     Org-Wide Email Address that is verified:
-     *     Setup → Email → Organization-Wide Addresses → Add
-     *     Use any address you own and click the verification link.
-     *
-     *  3. This method looks up that OrgWideEmailAddress and uses it as
-     *     the From address. If none is found it falls back to the
-     *     running-user address (works in internal/authenticated orgs).
-     *
-     *  4. As a belt-and-suspenders fallback the contact is always saved
-     *     as a Lead in Salesforce, so you never lose a submission even
-     *     if email delivery is blocked.
-     * ─────────────────────────────────────────────────────────────
-     */
     @AuraEnabled
     public static void handleContact(
         String name,
@@ -95,7 +82,6 @@ public class PortfolioController {
             Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 
             // Use a verified Org-Wide Email Address when available.
-            // Query by DisplayName so the sender is the org-wide address named PortfolioMail.
             List<OrgWideEmailAddress> owea = [
                 SELECT Id, Address, DisplayName FROM OrgWideEmailAddress
                 WHERE DisplayName = 'PortfolioMail'
@@ -104,19 +90,15 @@ public class PortfolioController {
             if (!owea.isEmpty()) {
                 mail.setOrgWideEmailAddressId(owea[0].Id);
             }
-            // else: Salesforce uses the running-user's email as From
-            // (fine for internal/authenticated pages)
 
             mail.setToAddresses(new List<String>{ toEmail });
             mail.setSenderDisplayName('Portfolio Contact Form');
             mail.setSubject('[Portfolio] ' + subject);
 
-            // Reply-To so you can reply directly to the visitor
             if (!String.isBlank(email)) {
                 mail.setReplyTo(email);
             }
 
-            // Plain-text body
             mail.setPlainTextBody(
                 '=== New Portfolio Contact ===\n\n' +
                 'Name:    ' + name    + '\n' +
@@ -126,7 +108,6 @@ public class PortfolioController {
                 body
             );
 
-            // HTML body
             mail.setHtmlBody(
                 '<div style="font-family:Arial,sans-serif;max-width:600px;margin:auto;' +
                 'border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;">' +
@@ -161,14 +142,11 @@ public class PortfolioController {
             List<Messaging.SendEmailResult> results =
                 Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{ mail });
 
-            // Surface any delivery errors
             if (results != null && !results.isEmpty() && !results[0].isSuccess()) {
                 List<String> errs = new List<String>();
                 for (Messaging.SendEmailError e2 : results[0].getErrors()) {
                     errs.add(e2.getStatusCode() + ': ' + e2.getMessage());
                 }
-                // We still throw so the LWC can show a meaningful message.
-                // But the Lead was already saved above.
                 throw new AuraHandledException(
                     'Email delivery failed — your message was saved. Error: ' +
                     String.join(errs, '; ')
@@ -176,7 +154,7 @@ public class PortfolioController {
             }
 
         } catch (AuraHandledException ahe) {
-            throw ahe; // re-throw our own
+            throw ahe;
         } catch (Exception e) {
             throw new AuraHandledException(
                 'Email send error (message was saved): ' + e.getMessage()

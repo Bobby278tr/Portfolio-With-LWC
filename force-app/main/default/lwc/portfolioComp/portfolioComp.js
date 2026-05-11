@@ -4,6 +4,7 @@ import getExperience     from '@salesforce/apex/PortfolioController.getExperienc
 import getSkills         from '@salesforce/apex/PortfolioController.getSkills';
 import getProjects       from '@salesforce/apex/PortfolioController.getProjects';
 import getCertifications from '@salesforce/apex/PortfolioController.getCertifications';
+import getFuturePlans    from '@salesforce/apex/PortfolioController.getFuturePlans';
 import handleContact     from '@salesforce/apex/PortfolioController.handleContact';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
@@ -18,6 +19,18 @@ const HERO_TITLES = [
     'Flow Architect',
     'Trailblazer',
 ];
+
+/* ── PROGRESS CONFIG per Level__c value ───────────────────────────────────
+   Level picklist values: Not started | Started it | In middle | About to complete
+   ────────────────────────────────────────────────────────────────────────── */
+const LEVEL_CONFIG = {
+    'Not started':       { pct: 4,   icon: '🌱', iconClass: 'fd-level-icon fd-level-icon--seed',     badgeClass: 'fd-badge fd-badge--seed',     label: '0%'  },
+    'Started it':        { pct: 25,  icon: '🔥', iconClass: 'fd-level-icon fd-level-icon--fire',     badgeClass: 'fd-badge fd-badge--fire',     label: '25%' },
+    'In middle':         { pct: 55,  icon: '⚡', iconClass: 'fd-level-icon fd-level-icon--bolt',     badgeClass: 'fd-badge fd-badge--bolt',     label: '55%' },
+    'About to complete': { pct: 88,  icon: '🎯', iconClass: 'fd-level-icon fd-level-icon--target',   badgeClass: 'fd-badge fd-badge--target',   label: '88%' },
+};
+
+const DEFAULT_LEVEL = { pct: 0, icon: '📌', iconClass: 'fd-level-icon', badgeClass: 'fd-badge', label: '—' };
 
 export default class Portfolio extends LightningElement {
 
@@ -74,8 +87,8 @@ export default class Portfolio extends LightningElement {
     get activeCertifications() { return this.activeSection === 'certifications' ? 'nav-link nav-link--active' : 'nav-link'; }
     get activeContact()        { return this.activeSection === 'contact'        ? 'nav-link nav-link--active' : 'nav-link'; }
 
-    /* ── theme toggle (light / dark) ─────────────────────────────── */
-    @track isDark = true;   // starts dark (portfolio default)
+    /* ── theme toggle ─────────────────────────────────────────────── */
+    @track isDark = true;
 
     get themeClass() { return this.isDark ? 'background background--dark' : 'background background--light'; }
     get themeIcon()  { return this.isDark ? '☀' : '☾'; }
@@ -177,6 +190,55 @@ export default class Portfolio extends LightningElement {
     @wire(getProjects)       projects;
     @wire(getCertifications) certifications;
 
+    /* ── FUTURE PLANS — drawer state ─────────────────────────────── */
+    @track futureDrawerOpen   = false;
+    @track futurePlansData    = [];
+    @track futurePlansLoading = true;
+
+    get futurePlansEmpty() { return !this.futurePlansLoading && this.futurePlansData.length === 0; }
+
+    get futurePillClass() {
+        return this.futureDrawerOpen
+            ? 'fp-pill fp-pill--open'
+            : 'fp-pill';
+    }
+
+    get futureDrawerClass() {
+        return this.futureDrawerOpen
+            ? 'fd-drawer fd-drawer--open'
+            : 'fd-drawer';
+    }
+
+    get drawerChevron() { return this.futureDrawerOpen ? '✕' : '›'; }
+
+    toggleFutureDrawer() {
+        this.futureDrawerOpen = !this.futureDrawerOpen;
+    }
+
+    stopFutureDrawerPropagation(event) { event.stopPropagation(); }
+
+    @wire(getFuturePlans)
+    wiredFuturePlans({ data, error }) {
+        this.futurePlansLoading = false;
+        if (data) {
+            this.futurePlansData = data.map(plan => {
+                const cfg = LEVEL_CONFIG[plan.Level__c] || DEFAULT_LEVEL;
+                return {
+                    ...plan,
+                    levelIcon:       cfg.icon,
+                    levelIconClass:  cfg.iconClass,
+                    levelBadgeClass: cfg.badgeClass,
+                    progressLabel:   cfg.label,
+                    // inline style drives the bar width — LWC-safe approach
+                    progressStyle:   `width:${cfg.pct}%`,
+                    progressBarClass:'fd-progress-bar',
+                };
+            });
+        } else if (error) {
+            console.error('FuturePlans:', error);
+        }
+    }
+
     /* ── lifecycle ───────────────────────────────────────────────── */
     connectedCallback() {
         this._scrollHandler = this.onScroll.bind(this);
@@ -188,7 +250,6 @@ export default class Portfolio extends LightningElement {
         };
         window.addEventListener('mousemove', this._mouseMoveHandler, { passive: true });
 
-        // Start typewriter
         setTimeout(() => this._typeStep(), 500);
     }
 
@@ -201,7 +262,6 @@ export default class Portfolio extends LightningElement {
     }
 
     renderedCallback() {
-        // Scroll-reveal
         const revealEls = this.template.querySelectorAll('.reveal:not(.observer-added)');
         if (!this._revealObserver) {
             this._revealObserver = new IntersectionObserver(
@@ -211,7 +271,6 @@ export default class Portfolio extends LightningElement {
         }
         revealEls.forEach(el => { this._revealObserver.observe(el); el.classList.add('observer-added'); });
 
-        // Active nav
         if (!this._navObserver) {
             const sections = this.template.querySelectorAll('section[id]');
             this._navObserver = new IntersectionObserver(
