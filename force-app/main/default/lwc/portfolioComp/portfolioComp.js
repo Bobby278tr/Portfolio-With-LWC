@@ -21,16 +21,17 @@ const HERO_TITLES = [
 ];
 
 /* ── PROGRESS CONFIG per Level__c value ───────────────────────────────────
-   Level picklist values: Not started | Started it | In middle | About to complete
+   Level picklist values: Not Started | In Progress | Almost Done | Completed
    ────────────────────────────────────────────────────────────────────────── */
 const LEVEL_CONFIG = {
-    'Not Started':       { pct: 0,   icon: '🌱', iconClass: 'fd-level-icon fd-level-icon--seed',     badgeClass: 'fd-badge fd-badge--seed',     label: '0%'  },
-    'In Progress':        { pct: 40,  icon: '🔥', iconClass: 'fd-level-icon fd-level-icon--fire',     badgeClass: 'fd-badge fd-badge--fire',     label: '40%' },
-    'Almost Done':         { pct: 80,  icon: '⚡', iconClass: 'fd-level-icon fd-level-icon--bolt',     badgeClass: 'fd-badge fd-badge--bolt',     label: '80%' },
-    'Completed': { pct: 100,  icon: '🎯', iconClass: 'fd-level-icon fd-level-icon--target',   badgeClass: 'fd-badge fd-badge--target',   label: '100%' },
+    'Not Started': { pct: 0,   icon: 'N', iconClass: 'fd-level-icon fd-level-icon--seed',   badgeClass: 'fd-badge fd-badge--seed',   label: '0%'   },
+    'Started':     { pct: 25,  icon: 'S', iconClass: 'fd-level-icon fd-level-icon--fire',   badgeClass: 'fd-badge fd-badge--fire',   label: '25%'  },
+    'In Progress': { pct: 40,  icon: 'P', iconClass: 'fd-level-icon fd-level-icon--fire',   badgeClass: 'fd-badge fd-badge--fire',   label: '40%'  },
+    'Almost Done': { pct: 80,  icon: 'A', iconClass: 'fd-level-icon fd-level-icon--bolt',   badgeClass: 'fd-badge fd-badge--bolt',   label: '80%'  },
+    'Completed':   { pct: 100, icon: 'C', iconClass: 'fd-level-icon fd-level-icon--target', badgeClass: 'fd-badge fd-badge--target', label: '100%' },
 };
 
-const DEFAULT_LEVEL = { pct: 0, icon: '📌', iconClass: 'fd-level-icon', badgeClass: 'fd-badge', label: '—' };
+const DEFAULT_LEVEL = { pct: 0, icon: '-', iconClass: 'fd-level-icon', badgeClass: 'fd-badge', label: '-' };
 
 export default class Portfolio extends LightningElement {
 
@@ -124,11 +125,11 @@ export default class Portfolio extends LightningElement {
 
     sendContact() {
         if (!this.name.trim() || !this.email.trim() || !this.body.trim()) {
-            this.showToast('Hold on!', 'Name, email and message are all required.', 'warning');
+            this.showToast('Required fields missing', 'Name, email and message are required.', 'warning');
             return;
         }
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.email.trim())) {
-            this.showToast('Hmm!', 'Please enter a valid email address.', 'warning');
+            this.showToast('Invalid email', 'Please enter a valid email address.', 'warning');
             return;
         }
         this.isSending = true;
@@ -220,7 +221,7 @@ export default class Portfolio extends LightningElement {
             : 'fd-drawer';
     }
 
-    get drawerChevron() { return this.futureDrawerOpen ? '✕' : '›'; }
+    get drawerChevron() { return this.futureDrawerOpen ? 'x' : '>'; }
 
     toggleFutureDrawer() {
         this.futureDrawerOpen = !this.futureDrawerOpen;

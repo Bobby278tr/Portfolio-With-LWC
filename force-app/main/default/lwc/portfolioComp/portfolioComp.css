@@ -70,6 +70,7 @@
     color: var(--text);
     transition: background-color .4s, color .4s;
     position: relative;
+    width: 100%;
 }
 
 .background--dark {
