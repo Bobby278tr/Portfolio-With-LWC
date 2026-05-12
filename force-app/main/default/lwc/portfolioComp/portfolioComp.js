@@ -24,10 +24,10 @@ const HERO_TITLES = [
    Level picklist values: Not started | Started it | In middle | About to complete
    ────────────────────────────────────────────────────────────────────────── */
 const LEVEL_CONFIG = {
-    'Not started':       { pct: 4,   icon: '🌱', iconClass: 'fd-level-icon fd-level-icon--seed',     badgeClass: 'fd-badge fd-badge--seed',     label: '0%'  },
-    'Started it':        { pct: 25,  icon: '🔥', iconClass: 'fd-level-icon fd-level-icon--fire',     badgeClass: 'fd-badge fd-badge--fire',     label: '25%' },
-    'In middle':         { pct: 55,  icon: '⚡', iconClass: 'fd-level-icon fd-level-icon--bolt',     badgeClass: 'fd-badge fd-badge--bolt',     label: '55%' },
-    'About to complete': { pct: 88,  icon: '🎯', iconClass: 'fd-level-icon fd-level-icon--target',   badgeClass: 'fd-badge fd-badge--target',   label: '88%' },
+    'Not Started':       { pct: 0,   icon: '🌱', iconClass: 'fd-level-icon fd-level-icon--seed',     badgeClass: 'fd-badge fd-badge--seed',     label: '0%'  },
+    'In Progress':        { pct: 40,  icon: '🔥', iconClass: 'fd-level-icon fd-level-icon--fire',     badgeClass: 'fd-badge fd-badge--fire',     label: '40%' },
+    'Almost Done':         { pct: 80,  icon: '⚡', iconClass: 'fd-level-icon fd-level-icon--bolt',     badgeClass: 'fd-badge fd-badge--bolt',     label: '80%' },
+    'Completed': { pct: 100,  icon: '🎯', iconClass: 'fd-level-icon fd-level-icon--target',   badgeClass: 'fd-badge fd-badge--target',   label: '100%' },
 };
 
 const DEFAULT_LEVEL = { pct: 0, icon: '📌', iconClass: 'fd-level-icon', badgeClass: 'fd-badge', label: '—' };
@@ -197,6 +197,17 @@ export default class Portfolio extends LightningElement {
 
     get futurePlansEmpty() { return !this.futurePlansLoading && this.futurePlansData.length === 0; }
 
+    get selectedProjectSkills() {
+        return (this.selectedProject?.Skills__c || '')
+            .split(',')
+            .map(skill => skill.trim())
+            .filter(skill => skill);
+    }
+
+    get selectedProjectGithub() {
+        return this.selectedProject?.Github_Link__c || '';
+    }
+
     get futurePillClass() {
         return this.futureDrawerOpen
             ? 'fp-pill fp-pill--open'
@@ -244,18 +255,11 @@ export default class Portfolio extends LightningElement {
         this._scrollHandler = this.onScroll.bind(this);
         window.addEventListener('scroll', this._scrollHandler, { passive: true });
 
-        this._mouseMoveHandler = e => {
-            const s = this.template.querySelector('.spotlight');
-            if (s) { s.style.left = e.clientX + 'px'; s.style.top = e.clientY + 'px'; }
-        };
-        window.addEventListener('mousemove', this._mouseMoveHandler, { passive: true });
-
         setTimeout(() => this._typeStep(), 500);
     }
 
     disconnectedCallback() {
         window.removeEventListener('scroll', this._scrollHandler);
-        window.removeEventListener('mousemove', this._mouseMoveHandler);
         clearTimeout(this._typeTimer);
         if (this._revealObserver) this._revealObserver.disconnect();
         if (this._navObserver)    this._navObserver.disconnect();

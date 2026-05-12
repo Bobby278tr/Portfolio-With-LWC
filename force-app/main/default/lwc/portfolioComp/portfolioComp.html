@@ -1,7 +1,5 @@
 <template>
     <div class={themeClass}>
-        <div class="spotlight"></div>
-
         <!-- ═══════════════ NAVBAR ═══════════════ -->
         <nav class="navbar">
             <div class="logo">B</div>
@@ -140,12 +138,32 @@
         <template if:true={selectedProject}>
             <div class="modal" onclick={closeModal}>
                 <div class="modal-content" onclick={stopPropagation}>
-                    <span class="modal-close" onclick={closeModal}>✕</span>
-                    <h2>{selectedProject.Name}</h2>
-                    <img src={selectedProject.Image_URL__c} class="modal-project-image" alt={selectedProject.Name} />
-                    <p>{selectedProject.Full_Description__c}</p>
-                    <p><b>Skills:</b> {selectedProject.Skills__c}</p>
-                    <a href={selectedProject.Github_Link__c} target="_blank">View on GitHub →</a>
+                    <button class="modal-close" onclick={closeModal} title="Close project details">x</button>
+
+                    <div class="modal-grid">
+                        <div class="modal-media">
+                            <img src={selectedProject.Image_URL__c} class="modal-project-image" alt={selectedProject.Name} />
+                        </div>
+
+                        <div class="modal-details">
+                            <p class="modal-eyebrow">Featured Project</p>
+                            <h2>{selectedProject.Name}</h2>
+                            <p class="modal-description">{selectedProject.Full_Description__c}</p>
+
+                            <div class="modal-section">
+                                <h3>Skills Used</h3>
+                                <div class="modal-skill-list">
+                                    <template for:each={selectedProjectSkills} for:item="skill">
+                                        <span key={skill} class="modal-skill">{skill}</span>
+                                    </template>
+                                </div>
+                            </div>
+
+                            <template if:true={selectedProjectGithub}>
+                                <a href={selectedProjectGithub} target="_blank" class="modal-link">View on GitHub &rarr;</a>
+                            </template>
+                        </div>
+                    </div>
                 </div>
             </div>
         </template>
