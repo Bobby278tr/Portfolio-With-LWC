@@ -14,7 +14,7 @@ import HeroImage     from '@salesforce/resourceUrl/HeroImage';
 /* ── HERO TYPEWRITER TITLES ─────────────────────────────────────────────── */
 const HERO_TITLES = [
     'Salesforce Developer',
-    'LWC Specialist',
+    'Lightning Web Developer',
     'Apex Engineer',
     'Flow Architect',
     'Trailblazer',
@@ -76,7 +76,7 @@ export default class Portfolio extends LightningElement {
     menuOpen = false;
     @track activeSection = 'about';
 
-    get navClass() { return this.menuOpen ? 'nav-links active' : 'nav-links'; }
+    get navClass() { return this.menuOpen ? 'nav-links active slds-text-body_regular' : 'nav-links slds-text-body_regular'; }
     toggleMenu()   { this.menuOpen = !this.menuOpen; }
     closeMenu()    { this.menuOpen = false; }
 
