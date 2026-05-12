@@ -18,6 +18,7 @@
     <tabs>Skill__c</tabs>
     <tabs>standard-Lead</tabs>
     <tabs>Portfolio</tabs>
+    <tabs>Future_Plans__c</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>PortFolio_UtilityBar</utilityBar>
 </CustomApplication>

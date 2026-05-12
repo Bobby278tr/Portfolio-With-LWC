@@ -6,6 +6,7 @@
         <members>Skill__c</members>
         <members>Certification__c</members>
         <members>Project__c</members>
+        <members>Future_Plans__c</members>
         <name>CustomObject</name>
     </types>
 
