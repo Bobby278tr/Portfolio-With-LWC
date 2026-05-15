@@ -16,14 +16,14 @@
                 <label>Not Started</label>
             </value>
             <value>
-                <fullName>Started</fullName>
-                <default>false</default>
-                <label>Started</label>
-            </value>
-            <value>
                 <fullName>In Progress</fullName>
                 <default>false</default>
                 <label>In Progress</label>
+            </value>
+            <value>
+                <fullName>Almost Done</fullName>
+                <default>false</default>
+                <label>Almost Done</label>
             </value>
             <value>
                 <fullName>Completed</fullName>

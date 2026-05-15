@@ -41,7 +41,7 @@ public class PortfolioController {
     @AuraEnabled(cacheable=true)
     public static List<Future_Plans__c> getFuturePlans(){
         return [SELECT Id, Name, Level__c, Description__c
-                FROM Future_Plans__c
+                FROM Future_Plans__c Where isVisibleOnUI__c = true
                 ORDER BY CreatedDate DESC];
     }
 
